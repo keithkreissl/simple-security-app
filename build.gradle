@@ -1,0 +1,47 @@
+repositories {
+	jcenter()
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+sourceCompatibility = 1.7
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Simple Security App', 'Implementation-Version': version
+    }
+}
+
+
+version = ['springSecurity': '3.2.3.RELEASE',
+	        'springFramework' : '4.0.4.RELEASE',
+			'commonsCollections' : '3.2',
+			'servletApi' : '3.1',
+			'junit' : '4.+']
+
+dependencies {
+    compile "commons-collections:commons-collections:${version.commonsCollections}"
+	compile "org.springframework.security:spring-security-web:${version.springSecurity}"
+	compile "org.springframework.security:spring-security-config:${version.springSecurity}"
+	compile "org.springframework:spring-context:${version.springFramework}"
+	compile "org.springframework:spring-webmvc:${version.springFramework}"
+    testCompile "junit:junit:${version.junit}"
+}
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'org.akhikhl.gretty:gretty-plugin:+'
+	}
+}
+
+apply plugin: 'gretty'
+
+gretty{
+	contextPath='/simple-security-app'
+	port=8081
+}
